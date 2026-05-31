@@ -110,36 +110,66 @@
         </div>
 
         <!-- SIDEBAR STATS -->
-        <div class="col-lg-4 col-12">
+        <div class="card mt-4"
+            style="background: rgba(15, 23, 42, 0.7);
+                    backdrop-filter: blur(14px);
+                    border: 1px solid rgba(99, 102, 241, 0.2);
+                    border-radius: 16px;
+                    padding: 2rem;">
+            <h4 style="color: var(--text-primary); margin-bottom: 1rem;">Moji dogodki</h4>
 
-            <div class="card"
-                 style="background: rgba(15, 23, 42, 0.7);
-                        backdrop-filter: blur(14px);
-                        border: 1px solid rgba(16, 185, 129, 0.2);
-                        border-radius: 16px;
-                        padding: 1.5rem;">
+            @php
+                $myParties = auth()->user()
+                    ->parties()
+                    ->orderBy('date_time')
+                    ->get();
+            @endphp
 
-                <h5 style="color: var(--text-primary); margin-bottom: 1rem;">
-                    Tvoj račun
-                </h5>
+            @if($myParties->isEmpty())
+                <p style="color: var(--text-muted); margin: 0;">Trenutno nisi prijavljen na noben dogodek.</p>
+            @else
+                <div class="events-container">
+                    @foreach($myParties as $event)
+                        <div class="card">
+                            @if($event->image)
+                                <img src="{{ $event->image }}" alt="{{ $event->title }}" class="card-image">
+                            @else
+                                <div class="card-image"></div>
+                            @endif
 
-                <div style="margin-bottom: 1rem;">
-                    <div style="color: var(--text-muted); font-size: 0.85rem;">Ustvarjeni dogodki</div>
-                    <div style="color: white; font-size: 1.2rem; font-weight: 600;">0</div>
+                            <div class="card-body">
+                                <div class="card-header">
+                                    <h3 class="card-title">{{ $event->title }}</h3>
+                                    <span class="card-badge">{{ $event->category ?? 'EVENT' }}</span>
+                                </div>
+
+                                <div class="card-meta">
+                                    <div class="card-meta-item">
+                                        <i class="bi bi-calendar3"></i>
+                                        <span>{{ \Carbon\Carbon::parse($event->date_time)->format('d. m. Y H:i') }}</span>
+                                    </div>
+                                    <div class="card-meta-item">
+                                        <i class="bi bi-geo-alt"></i>
+                                        <span>{{ $event->location }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="card-actions">
+                                    <a href="{{ route('parties.show', $event->id) }}" class="btn btn-secondary">
+                                        Več podrobnosti
+                                    </a>
+
+                                    <form method="POST" action="{{ route('parties.leave', $event) }}" style="margin:0;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger">Ne grem več</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
                 </div>
-
-                <div style="margin-bottom: 1rem;">
-                    <div style="color: var(--text-muted); font-size: 0.85rem;">Prijavljeni dogodki</div>
-                    <div style="color: white; font-size: 1.2rem; font-weight: 600;">0</div>
-                </div>
-
-                <div style="margin-top: 1.5rem;">
-                    <a href="#" class="btn btn-success w-100">
-                        Moji dogodki
-                    </a>
-                </div>
-
-            </div>
+            @endif
         </div>
 
     </div>

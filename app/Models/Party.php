@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
 
 class Party extends Model
 {
@@ -11,7 +12,6 @@ class Party extends Model
         'description',
         'location',
         'date_time',
-        'user_id',
         'category',
         'image',
         'user_id'
@@ -20,4 +20,9 @@ class Party extends Model
     protected $casts = [
         'date_time' => 'datetime',
     ];
+
+    public function attendees()
+    {
+        return $this->belongsToMany(User::class)->withTimestamps();
+    }
 }

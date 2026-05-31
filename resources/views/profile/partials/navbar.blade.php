@@ -6,18 +6,6 @@
                 PartyFinder
             </a>
 
-            <!-- Search Bar (Desktop) -->
-            <div style="flex: 1; max-width: 400px; display: none;" class="d-lg-block">
-                <form role="search" style="width: 100%;">
-                    <input 
-                        type="search" 
-                        class="nav-search" 
-                        placeholder="Iskanje zabav, koncertov, festivalov..."
-                        aria-label="Iskanje"
-                    >
-                </form>
-            </div>
-
             <!-- Right Side: Auth Buttons & Menu -->
             <div style="display: flex; align-items: center; gap: 0.75rem;">
                 @guest

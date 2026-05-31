@@ -2,6 +2,7 @@
 <html lang="sl">
 <head>
     <meta charset="utf-8">
+    <link rel="icon" type="image/png" href="{{ asset('favicon.ico') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('title', 'PartyFinder')</title>
 
@@ -665,7 +666,10 @@
             color: #ffffff !important;
         }
 
-        /* CREATE BLADE PHP UI*/
+        .form-control::placeholder {
+            color: #ffffff;
+            opacity: 1; 
+        }
         
     </style>
 
