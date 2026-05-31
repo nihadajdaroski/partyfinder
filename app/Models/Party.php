@@ -12,6 +12,9 @@ class Party extends Model
         'location',
         'date_time',
         'user_id',
+        'category',
+        'image',
+        'user_id'
     ];
 
     protected $casts = [

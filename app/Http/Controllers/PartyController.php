@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Party;
+use Illuminate\Support\Facades\Storage;
+
 
 class PartyController extends Controller
 {
@@ -36,8 +38,14 @@ class PartyController extends Controller
             'location' => 'required|string|max:255',
             'date_time' => 'required|date',
             'category' => 'required|string',
-            'image' => 'nullable|url',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
+
+        $imagePath = null;
+
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('parties', 'public');
+        }
 
         Party::create([
             'title' => $request->title,
@@ -45,11 +53,11 @@ class PartyController extends Controller
             'location' => $request->location,
             'date_time' => $request->date_time,
             'category' => $request->category,
-            'image' => $request->image ?? 'https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&w=1200&q=70',
-            'user_id' => Auth::id(),
+            'image' => $imagePath ? '/storage/' . $imagePath : null,
+            'user_id' => auth()->id(),
         ]);
 
-        return redirect()->route('home')->with('success', 'Dogodek uspešno ustvarjen!');
+        return redirect()->route('dashboard')->with('success', 'Dogodek uspešno ustvarjen!');
     }
 
     /**
