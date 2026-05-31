@@ -1,47 +1,111 @@
-<x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+@extends('layouts.auth')
 
-    <form method="POST" action="{{ route('login') }}">
+@section('title', 'Prijava • PartyFinder')
+
+@section('content')
+
+<div class="auth-card">
+    <div class="auth-header">
+        <h2 class="auth-title">Prijava</h2>
+        <p class="auth-subtitle">
+            Nemaš računa? <a href="{{ route('register') }}">Registriraj se</a>
+        </p>
+    </div>
+
+    <!-- Login Form -->
+    <form method="POST" action="{{ route('login') }}" novalidate>
         @csrf
 
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        <!-- Email Input -->
+        <div class="form-group">
+            <label for="email" class="form-label">Elektronska pošta</label>
+            <input 
+                type="email" 
+                id="email" 
+                name="email" 
+                class="form-control @error('email') is-invalid @enderror"
+                placeholder="vpisati@example.com"
+                value="{{ old('email') }}"
+                required
+                autofocus
+            >
+            @error('email')
+                <div class="invalid-feedback">
+                    <i class="bi bi-exclamation-circle me-1"></i>{{ $message }}
+                </div>
+            @enderror
         </div>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        <!-- Password Input -->
+        <div class="form-group">
+            <label for="password" class="form-label">Geslo</label>
+            <input 
+                type="password" 
+                id="password" 
+                name="password" 
+                class="form-control @error('password') is-invalid @enderror"
+                placeholder="••••••••"
+                required
+            >
+            @error('password')
+                <div class="invalid-feedback">
+                    <i class="bi bi-exclamation-circle me-1"></i>{{ $message }}
+                </div>
+            @enderror
         </div>
 
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800" name="remember">
-                <span class="ms-2 text-sm text-gray-600 dark:text-gray-400">{{ __('Remember me') }}</span>
-            </label>
+        <!-- Remember Me & Forgot Password -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+            <div class="form-check">
+                <input 
+                    type="checkbox" 
+                    id="remember" 
+                    name="remember" 
+                    class="form-check-input"
+                    {{ old('remember') ? 'checked' : '' }}
+                >
+                <label class="form-check-label" for="remember">
+                    Zapomni si me
+                </label>
+            </div>
+
+            <a href="{{ route('password.request') }}"
+               style="font-size: 0.9rem; color: var(--color-primary); text-decoration: none; font-weight: 600;">
+                Pozabljeno geslo?
+            </a>
         </div>
 
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
-
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
-        </div>
+        <!-- Login Button -->
+        <button type="submit" class="btn btn-primary">
+            <i class="bi bi-box-arrow-in-right me-2"></i>Prijava
+        </button>
     </form>
-</x-guest-layout>
+
+</div>
+
+@endsection
+
+@push('scripts')
+<script>
+    document.querySelectorAll('.form-control').forEach(input => {
+        input.addEventListener('focus', function() {
+            this.parentElement.style.transform = 'scale(1.01)';
+            this.parentElement.style.transition = 'transform 0.2s ease';
+        });
+
+        input.addEventListener('blur', function() {
+            this.parentElement.style.transform = 'scale(1)';
+        });
+    });
+
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+    `;
+    document.head.appendChild(style);
+</script>
+@endpush

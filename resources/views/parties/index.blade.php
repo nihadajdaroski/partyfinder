@@ -57,12 +57,12 @@
     </div>
 </div>
 
-<!-- MAIN CONTENT -->
-<div style="display: grid; grid-template-columns: 1fr 300px; gap: 2rem; margin-top: 2rem;">
+<!-- MAIN CONTENT WITH RESPONSIVE GRID -->
+<div class="main-grid">
 
     <!-- EVENTS GRID -->
     <div>
-        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem;">
+        <div class="events-container">
             
             @php
                 $events = [
@@ -134,7 +134,11 @@
 
                         <div class="card-actions">
                             <a href="#" class="btn btn-secondary">Več podrobnosti</a>
-                            <button class="btn btn-success" style="flex: 0.7;">Grem</button>
+                            @if(auth()->check())
+                                <button class="btn btn-success">Grem</button>
+                            @else
+                                
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -147,17 +151,34 @@
     <div class="sidebar">
 
         <!-- Create Event CTA -->
-        <div class="sidebar-panel" style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(16, 185, 129, 0.05) 100%); border: 1px solid rgba(99, 102, 241, 0.2);">
-            <div style="display: flex; gap: 1rem; align-items: center;">
-                <div>
-                    <div class="sidebar-title" style="margin: 0; font-size: 0.95rem;">Ustvari dogodek</div>
-                    <p style="font-size: 0.8rem; color: var(--text-muted); margin: 0.5rem 0 0 0;">Deli svojo zabavo z mestom.</p>
+        <div class="sidebar-panel"
+     style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(16, 185, 129, 0.05) 100%);
+            border: 1px solid rgba(99, 102, 241, 0.2);">
+
+        <div style="display: flex; gap: 1rem; align-items: center; justify-content: space-between;">
+
+            <div>
+                <div class="sidebar-title" style="margin: 0; font-size: 0.95rem;">
+                    Ustvari dogodek
                 </div>
-                <button class="btn-icon" style="flex-shrink: 0;">
-                    <i class="bi bi-plus-lg" style="font-size: 1.25rem;"></i>
-                </button>
+
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin: 0.5rem 0 0 0;">
+                    Deli svojo zabavo z mestom.
+                </p>
             </div>
+
+            @auth
+                <a href="{{ route('parties.create') }}" class="btn-icon" style="flex-shrink: 0;">
+                    <i class="bi bi-plus-lg" style="font-size: 1.25rem;"></i>
+                </a>
+            @else
+                <a href="{{ route('login') }}" class="btn-icon" style="flex-shrink: 0;" title="Prijavi se za ustvarjanje dogodkov">
+                    <i class="bi bi-lock" style="font-size: 1.25rem;"></i>
+                </a>
+            @endauth
+
         </div>
+    </div>
 
         <!-- Categories Filter -->
         <div class="sidebar-panel">

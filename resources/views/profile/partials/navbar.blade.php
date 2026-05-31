@@ -2,8 +2,7 @@
     <div class="container">
         <div style="display: flex; align-items: center; justify-content: space-between; width: 100%; gap: 2rem;">
             
-            <!-- Logo -->
-            <a class="navbar-brand" href="{{ route('dashboard') }}">
+            <a class="navbar-brand" href="/">
                 PartyFinder
             </a>
 

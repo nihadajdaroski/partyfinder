@@ -1,25 +1,73 @@
-<x-guest-layout>
-    <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
-        {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
+@extends('layouts.auth')
+
+@section('title', 'Pozabljeno geslo • PartyFinder')
+
+@section('content')
+
+<div class="auth-card">
+
+    <!-- Header -->
+    <div class="auth-header">
+        <h2 class="auth-title">Pozabljeno geslo</h2>
+        <p class="auth-subtitle">
+            Vnesi svoj email in poslali ti bomo povezavo za ponastavitev gesla.
+        </p>
     </div>
 
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+    <!-- Status message -->
+    @if (session('status'))
+        <div style="
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: var(--color-secondary);
+            padding: 0.75rem 1rem;
+            border-radius: 0.75rem;
+            font-size: 0.85rem;
+            margin-bottom: 1.5rem;
+        ">
+            {{ session('status') }}
+        </div>
+    @endif
 
+    <!-- Form -->
     <form method="POST" action="{{ route('password.email') }}">
         @csrf
 
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        <!-- Email -->
+        <div class="form-group">
+            <label for="email" class="form-label">Elektronska pošta</label>
+            <input
+                type="email"
+                id="email"
+                name="email"
+                class="form-control @error('email') is-invalid @enderror"
+                value="{{ old('email') }}"
+                placeholder="vpisati@example.com"
+                required
+                autofocus
+            >
+
+            @error('email')
+                <div class="invalid-feedback">
+                    <i class="bi bi-exclamation-circle me-1"></i>{{ $message }}
+                </div>
+            @enderror
         </div>
 
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button>
-                {{ __('Email Password Reset Link') }}
-            </x-primary-button>
-        </div>
+        <!-- Submit button -->
+        <button type="submit" class="btn btn-primary w-100">
+            <i class="bi bi-envelope me-2"></i>Pošlji povezavo za ponastavitev
+        </button>
     </form>
-</x-guest-layout>
+
+    <!-- Back to login -->
+    <div style="margin-top: 1.5rem; text-align: center;">
+        <a href="{{ route('login') }}"
+           style="color: var(--color-primary); font-weight: 600; text-decoration: none;">
+            ← Nazaj na prijavo
+        </a>
+    </div>
+
+</div>
+
+@endsection

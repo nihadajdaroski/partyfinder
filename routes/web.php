@@ -4,17 +4,14 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PartyController;
 
-
-Route::get('/', function () {
-    return view('index');
-});
-
 Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
+    return redirect('/');
+})->middleware(['auth'])->name('dashboard');
 
 Route::get('/', [PartyController::class, 'index']);
+
+/* DODANO */
+Route::get('/parties/{party}', [PartyController::class, 'show'])->name('parties.show');
 
 Route::middleware('auth')->group(function () {
     Route::resource('parties', PartyController::class);

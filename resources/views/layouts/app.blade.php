@@ -571,8 +571,34 @@
         }
 
         /* ========================
+           MAIN LAYOUT GRID
+           ======================== */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .events-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        /* ========================
            RESPONSIVE
            ======================== */
+        @media (max-width: 1024px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                order: -1;
+            }
+        }
+
         @media (max-width: 768px) {
             .hero {
                 padding: 2rem 1rem;
@@ -592,6 +618,45 @@
 
             .card-image {
                 height: 160px;
+            }
+
+            .events-container {
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 1.25rem;
+            }
+
+            .hero {
+                padding: 1.5rem 1rem;
+            }
+
+            .hero-subtitle {
+                font-size: 0.85rem;
+            }
+
+            .filter-bar {
+                padding: 1rem;
+                gap: 0.75rem;
+            }
+
+            .sidebar-panel {
+                padding: 1rem;
+            }
+
+            .events-container {
+                grid-template-columns: 1fr;
+            }
+
+            .card-image {
+                height: 150px;
+            }
+
+            .card-body {
+                padding: 1rem;
             }
         }
     </style>
