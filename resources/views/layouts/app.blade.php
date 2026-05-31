@@ -658,7 +658,15 @@
             .card-body {
                 padding: 1rem;
             }
+
         }
+
+        .form-label {
+            color: #ffffff !important;
+        }
+
+        /* CREATE BLADE PHP UI*/
+        
     </style>
 
     @stack('styles')

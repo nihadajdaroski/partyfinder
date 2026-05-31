@@ -12,8 +12,9 @@ class PartyController extends Controller
      */
     public function index()
     {
-        $parties = Party::latest()->get();
-        return view('parties.index', compact('parties'));
+        $events = Party::latest()->get();
+
+        return view('parties.index', compact('events'));
     }
 
     /**
@@ -21,7 +22,7 @@ class PartyController extends Controller
      */
     public function create()
     {
-        //
+        return view('parties.create');
     }
 
     /**
@@ -29,15 +30,34 @@ class PartyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'location' => 'required|string|max:255',
+            'date_time' => 'required|date',
+            'category' => 'required|string',
+            'image' => 'nullable|url',
+        ]);
+
+        Party::create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'location' => $request->location,
+            'date_time' => $request->date_time,
+            'category' => $request->category,
+            'image' => $request->image ?? 'https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&w=1200&q=70',
+            'user_id' => Auth::id(),
+        ]);
+
+        return redirect()->route('home')->with('success', 'Dogodek uspešno ustvarjen!');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Party $party)
     {
-        //
+        return view('parties.show', compact('party'));
     }
 
     /**

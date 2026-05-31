@@ -31,9 +31,9 @@
 
                 @auth
                     <div style="display: flex; align-items: center; gap: 0.75rem;">
-                        <button class="btn-icon" title="Profil">
+                        <a href="{{ route('profile.edit') }}" class="btn-icon" title="Profil">
                             <i class="bi bi-person-circle"></i>
-                        </button>
+                        </a>
                         <form method="POST" action="{{ route('logout') }}" style="margin: 0;">
                             @csrf
                             <button type="submit" class="btn-icon" title="Odjava">

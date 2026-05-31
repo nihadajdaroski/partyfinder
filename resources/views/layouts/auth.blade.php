@@ -121,6 +121,7 @@
             background: rgba(255,255,255,0.05);
         }
 
+
         /* MOBILE */
         @media (max-width: 768px) {
             .auth-page {

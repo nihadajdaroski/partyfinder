@@ -63,83 +63,42 @@
     <!-- EVENTS GRID -->
     <div>
         <div class="events-container">
-            
-            @php
-                $events = [
-                    [
-                        'title' => 'Petek Nočna Priprava',
-                        'date' => '15. julij, 21:00',
-                        'location' => 'Klub Metamorfoza, Ljubljana',
-                        'category' => 'TEHNOLOŠKA',
-                        'img' => 'https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&w=1200&q=70',
-                    ],
-                    [
-                        'title' => 'Nedeljska Strešna Sprostitev',
-                        'date' => '16. julij, 17:00',
-                        'location' => 'Skyline Bar, Maribor',
-                        'category' => 'RELAX',
-                        'img' => 'https://images.unsplash.com/photo-1520975958225-3f61d39a4a46?auto=format&fit=crop&w=1200&q=70',
-                    ],
-                    [
-                        'title' => 'Podzemna Študentska Noč',
-                        'date' => '16. julij, 22:30',
-                        'location' => 'Vault Club, Ljubljana',
-                        'category' => 'ZABAVA',
-                        'img' => 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=1200&q=70',
-                    ],
-                    [
-                        'title' => 'Luči Mesta Koncert',
-                        'date' => '17. julij, 20:00',
-                        'location' => 'Areno Hall, Ljubljana',
-                        'category' => 'KONCERT',
-                        'img' => 'https://images.unsplash.com/photo-1459749411175-04bf5292ceea?auto=format&fit=crop&w=1200&q=70',
-                    ],
-                    [
-                        'title' => 'Sončni Spust Domača Seje',
-                        'date' => '18. julij, 19:00',
-                        'location' => 'Riverside Deck, Ljubljana',
-                        'category' => 'RELAX',
-                        'img' => 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=1200&q=70',
-                    ],
-                    [
-                        'title' => 'Skladiščna Tehnološka Noč',
-                        'date' => '19. julij, 23:00',
-                        'location' => 'Distrikт 9, Ljubljana',
-                        'category' => 'TEHNOLOŠKA',
-                        'img' => 'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&w=1200&q=70',
-                    ],
-                ];
-            @endphp
-
             @foreach($events as $event)
                 <div class="card">
-                    <img src="{{ $event['img'] }}" alt="{{ $event['title'] }}" class="card-image">
+                    
+                    <img src="{{ $event->image }}" alt="{{ $event->title }}" class="card-image">
                     
                     <div class="card-body">
+
                         <div class="card-header">
-                            <h3 class="card-title">{{ $event['title'] }}</h3>
-                            <span class="card-badge">{{ $event['category'] }}</span>
+                            <h3 class="card-title">{{ $event->title }}</h3>
+
+                            <span class="card-badge">
+                                {{ $event->category ?? 'EVENT' }}
+                            </span>
                         </div>
 
                         <div class="card-meta">
                             <div class="card-meta-item">
                                 <i class="bi bi-calendar3"></i>
-                                <span>{{ $event['date'] }}</span>
+                                <span>{{ \Carbon\Carbon::parse($event->date_time)->format('d. m. Y H:i') }}</span>
                             </div>
+
                             <div class="card-meta-item">
                                 <i class="bi bi-geo-alt"></i>
-                                <span>{{ $event['location'] }}</span>
+                                <span>{{ $event->location }}</span>
                             </div>
                         </div>
 
                         <div class="card-actions">
-                            <a href="#" class="btn btn-secondary">Več podrobnosti</a>
-                            @if(auth()->check())
+                            <a href="{{ route('parties.show', $event->id) }}" class="btn btn-secondary">
+                                Več podrobnosti
+                            </a>
+                            @auth
                                 <button class="btn btn-success">Grem</button>
-                            @else
-                                
-                            @endif
+                            @endauth
                         </div>
+
                     </div>
                 </div>
             @endforeach
