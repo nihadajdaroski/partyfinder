@@ -600,14 +600,14 @@
 </head>
 <body>
     {{-- Navbar --}}
-    @includeIf('partials.navbar-improved')
+    @include('profile.partials.navbar')
 
     <main class="container py-4">
         @yield('content')
     </main>
 
     {{-- Footer --}}
-    @includeIf('partials.footer-improved')
+    @include('profile.partials.footer')
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     @stack('scripts')
