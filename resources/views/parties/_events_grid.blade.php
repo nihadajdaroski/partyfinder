@@ -36,19 +36,22 @@
 
                     @auth
                         @if(!$joined)
-                            <form method="POST" action="{{ route('parties.join', $event) }}" style="margin:0;">
+                            <form method="POST" action="{{ route('parties.join', $event) }}" style="margin:0; display:flex;">
                                 @csrf
                                 <button type="submit" class="btn btn-success">Grem</button>
                             </form>
                         @else
-                            <form method="POST" action="{{ route('parties.leave', $event) }}" style="margin:0;">
+                            <form method="POST" action="{{ route('parties.leave', $event) }}" style="margin:0; display:flex;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger">Ne grem več</button>
                             </form>
                         @endif
                     @else
-                        <a href="{{ route('login') }}" class="btn btn-success">Grem</a>
+                        {{-- Guest: uporabi isti tip elementa kot pri auth (form + button), da je izgled enak --}}
+                        <form method="GET" action="{{ route('login') }}" style="margin:0; display:flex;">
+                            <button type="submit" class="btn btn-success">Grem</button>
+                        </form>
                     @endauth
                 </div>
             </div>
