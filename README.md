@@ -1,59 +1,191 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# PartyFinder
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+PartyFinder je spletna aplikacija za odkrivanje, ustvarjanje in pridruževanje zabavam ter drugim dogodkom. Uporabnikom omogoča pregled razpoložljivih zabav, upravljanje lastnih dogodkov in povezovanje z drugimi udeleženci.
 
-## About Laravel
+Projekt je bil izdelan kot praktična demonstracija razvoja moderne spletne aplikacije z uporabo ogrodja Laravel.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Ključne funkcionalnosti
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- Registracija in prijava uporabnikov
+- Pregled javno dostopnih zabav
+- Ustvarjanje novih zabav
+- Urejanje in brisanje lastnih zabav
+- Pridružitev zabavi
+- Odjava od zabave
+- Upravljanje uporabniškega profila
+- Avtentikacija in zaščita uporabniških funkcionalnosti
+- Relacija med uporabniki in zabavami
+- Prilagodljiv uporabniški vmesnik
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Uporabljene tehnologije
 
-## Learning Laravel
+### Backend
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+- PHP 8.2+
+- Laravel 12
+- Laravel Eloquent ORM
+- Laravel Breeze
+- SQLite ali druga podprta relacijska podatkovna baza
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Frontend
 
-## Laravel Sponsors
+- Blade
+- Tailwind CSS
+- Alpine.js
+- Vite
+- Axios
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Orodja za razvoj
 
-### Premium Partners
+- Composer
+- npm
+- Pest / PHPUnit
+- Laravel Artisan
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+## Arhitektura aplikacije
 
-## Contributing
+Aplikacija uporablja Laravelovo MVC arhitekturo:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- **Models** – podatkovni modeli in relacije
+- **Views** – uporabniški vmesnik, izdelan z Blade predlogami
+- **Controllers** – poslovna logika in obdelava zahtevkov
+- **Routes** – definiranje javnih in zaščitenih spletnih poti
+- **Migrations** – struktura podatkovne baze
+- **Seeders** – začetni testni podatki
 
-## Code of Conduct
+## Namestitev in zagon
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Zahteve
 
-## Security Vulnerabilities
+Pred namestitvijo moraš imeti nameščeno:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- PHP 8.2 ali novejši
+- Composer
+- Node.js in npm
+- Podatkovno bazo, na primer SQLite
 
-## License
+### 1. Kloniranje repozitorija
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+git clone https://github.com/nihadajdaroski/partyfinder.git
+cd partyfinder
+```
+
+### 2. Namestitev odvisnosti
+
+```bash
+composer install
+npm install
+```
+
+### 3. Konfiguracija okolja
+
+Kopiraj datoteko `.env.example` v `.env` in ustvari aplikacijski ključ:
+
+```bash
+cp .env.example .env
+php artisan key:generate
+```
+
+### 4. Nastavitev podatkovne baze
+
+Če uporabljaš SQLite, ustvari datoteko podatkovne baze:
+
+```bash
+touch database/database.sqlite
+```
+
+V datoteki `.env` nastavi:
+
+```env
+DB_CONNECTION=sqlite
+```
+
+### 5. Migracije in testni podatki
+
+```bash
+php artisan migrate --seed
+```
+
+### 6. Zagon razvojnega okolja
+
+V prvem terminalu zaženi Laravel strežnik:
+
+```bash
+php artisan serve
+```
+
+V drugem terminalu zaženi Vite:
+
+```bash
+npm run dev
+```
+
+Aplikacija bo privzeto dostopna na `http://127.0.0.1:8000`.
+
+## Uporabni ukazi
+
+```bash
+# Laravel razvojni strežnik
+php artisan serve
+
+# Vite razvojni način
+npm run dev
+
+# Izgradnja frontend datotek
+npm run build
+
+# Ponastavitev podatkovne baze in ponovno sejanje
+php artisan migrate:fresh --seed
+
+# Zagon testov
+php artisan test
+```
+
+## Primer uporabniškega toka
+
+1. Uporabnik ustvari račun ali se prijavi.
+2. Na začetni strani pregleda razpoložljive zabave.
+3. Odpre podrobnosti izbrane zabave.
+4. Zabavi se pridruži ali jo zapusti.
+5. Ustvari lahko tudi svojo zabavo.
+6. Svoje zabave lahko kasneje ureja ali odstrani.
+
+## Cilj projekta
+
+Glavni cilj projekta je bil izdelati funkcionalno spletno platformo, ki povezuje uporabnike na podlagi skupnih interesov za druženje in dogodke.
+
+Pri razvoju sem se osredotočil predvsem na:
+
+- delo z uporabniško avtentikacijo,
+- izdelavo CRUD funkcionalnosti,
+- povezovanje modelov z Eloquent ORM,
+- zaščito poti z middleware-i,
+- delo z migracijami in seederji,
+- izdelavo dinamičnega uporabniškega vmesnika,
+- organizacijo Laravel projekta po MVC principu.
+
+## Možne izboljšave
+
+V prihodnosti bi bilo mogoče dodati:
+
+- iskanje in filtriranje zabav,
+- razvrščanje po lokaciji in datumu,
+- zemljevid dogodkov,
+- sistem ocen in komentarjev,
+- obvestila uporabnikom,
+- nalaganje slik zabav,
+- klepet med udeleženci,
+- moderiranje vsebine,
+- API za mobilno aplikacijo.
+
+## Avtor
+
+**Nihad Ajdaroski**
+
+- GitHub: [@nihadajdaroski](https://github.com/nihadajdaroski)
+- Repozitorij: [github.com/nihadajdaroski/partyfinder](https://github.com/nihadajdaroski/partyfinder)
+
+## Licenca
+
+Projekt je namenjen izobraževalni in portfolijski predstavitvi.
